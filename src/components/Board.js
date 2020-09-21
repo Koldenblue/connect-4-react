@@ -8,6 +8,10 @@ class Board extends React.Component {
     this.state = {
       myState: null
     }
+
+    // first populate the row and column arrays with numbers 0-6 or 0-5
+    this.populateColArr();
+    this.populateRowArr();
   }
 
   styles = {
@@ -20,18 +24,37 @@ class Board extends React.Component {
     }
   }
 
+  // creating new arrays the size of rows and columns, so that they can be mapped to Spaces below
+  rowArr = new Array(this.props.rows);
+  colArr = new Array(this.props.columns);
 
-  rowArr = new Array(this.props.rows).fill(null);
-  colArr = new Array(this.props.columns).fill(null);
+  populateColArr = () => {
+    for (let c = 0, j = this.colArr.length; c < j; c++) {
+      this.colArr[c] = c;
+    }
+  }
+
+  populateRowArr = () => {
+    for (let r = 0, j = this.rowArr.length; r < j; r++) {
+      this.rowArr[r] = r;
+    }
+  }
+
+  /** This function is called after the function is rendered */
+  // componentDidMount() {
+  //   this.populateRowArr();
+  //   this.populateColArr();
+  //   console.log(this.rowArr)
+  // }
+
 
   render() {
     return (
       <div>
-        {this.rowArr.map((item) => (
-
-          <div className='row' style={this.styles.boardRow}>
-          {this.colArr.map((item) => (
-            <Space />
+        {this.rowArr.map((r) => (
+          <div key={`row-${r}`}className='row' style={this.styles.boardRow}>
+          {this.colArr.map((c) => (
+            <Space id={`row-${r}-col-${c}`} key={`row-${r}-col-${c}`}/>
           ))}
         </div>
         ))}
