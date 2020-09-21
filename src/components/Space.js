@@ -30,19 +30,27 @@ class Space extends React.Component {
   }
 
   changeColor = () => {
-
-    let newColor = this.props.takeTurn();
-    this.setState({boardSpace: {
-      'border': '2px black solid',
-      'backgroundColor': newColor,
-      'borderRadius': '50px',
-      'marginTop':0,
-      'padding':0,
-      'height': '95px',
-    }
-  })
-
-    console.log("hi")
+    // let newColor = this.props.takeTurn();
+    // this.setState({boardSpace: {
+    //   'border': '2px black solid',
+    //   'backgroundColor': newColor,
+    //   'borderRadius': '50px',
+    //   'marginTop':0,
+    //   'padding':0,
+    //   'height': '95px',
+    // }
+    this.props.takeTurn().then(color => {
+      this.setState({
+        boardSpace: {
+          'border': '2px black solid',
+          'backgroundColor': color,
+          'borderRadius': '50px',
+          'marginTop':0,
+          'padding':0,
+          'height': '95px'
+        }
+      })
+    })
   }
 
   render() {
