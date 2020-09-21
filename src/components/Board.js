@@ -15,26 +15,11 @@ class Board extends React.Component {
     this.populateRowArr();
   }
 
-  takeTurn = () => {
-    this.setState({
-      player1Turn: !this.state.player1Turn
-    })
-  }
-
-  styles = {
-    boardRow: {
-    'height' :'100px',
-    'marginTop' :'0',
-    'padding' :'0',
-    'position' : 'relative',
-    'right' : '50px',
-    }
-  }
-
   // creating new arrays the size of rows and columns, so that they can be mapped to Spaces below
   rowArr = new Array(this.props.rows);
   colArr = new Array(this.props.columns);
 
+  // adds in values to the array, 0 to array.length, to be used in the ids
   populateColArr = () => {
     for (let c = 0, j = this.colArr.length; c < j; c++) {
       this.colArr[c] = c;
@@ -47,12 +32,30 @@ class Board extends React.Component {
     }
   }
 
-  /** This function is called after the function is rendered */
-  // componentDidMount() {
-  //   this.populateRowArr();
-  //   this.populateColArr();
-  //   console.log(this.rowArr)
-  // }
+
+  takeTurn = () => {
+    if (this.state.player1Turn) {
+      this.setState({color: 'blue'});
+    }
+    else {
+      this.setState({color: 'red'});
+    }
+    this.setState({
+      player1Turn: !this.state.player1Turn
+    });
+    console.log(this.state);
+    return this.state.color;
+  }
+
+  styles = {
+    boardRow: {
+    'height' :'100px',
+    'marginTop' :'0',
+    'padding' :'0',
+    'position' : 'relative',
+    'right' : '50px',
+    }
+  }
 
   // renders a row for each item in the row array. Then, inside each row, renders a Space for each item in the col array
   render() {
@@ -65,14 +68,22 @@ class Board extends React.Component {
               color={this.state.color}
               id={`row-${r}-col-${c}`}
               key={`row-${r}-col-${c}`}
-              onClick={this.takeTurn}
+              takeTurn={this.takeTurn}
             />
-          ))}
+            ))}
         </div>
         ))}
       </div>
     )
   }
+
+
+  /** This function is called after the function is rendered */
+  // componentDidMount() {
+  //   this.populateRowArr();
+  //   this.populateColArr();
+  //   console.log(this.rowArr)
+  // }
 }
 
 export default Board;
