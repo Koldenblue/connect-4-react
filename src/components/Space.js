@@ -1,4 +1,5 @@
 import React from "react"
+import "../styles/space.css"
 
 class Space extends React.Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class Space extends React.Component {
   render() {
     return (
       <div className='col-md-1' style={this.styles.boardColumn}>
-        <div className='col-md-12' id={this.props.id} style={this.styles.boardSpace}>
+        <div className='col-md-12 board-space' id={this.props.id} style={this.styles.boardSpace}>
 
         </div>
       </div>
