@@ -6,12 +6,19 @@ class Board extends React.Component {
     super(props);
 
     this.state = {
-      myState: null
+      player1Turn: true,
+      color: 'red',
     }
 
     // first populate the row and column arrays with numbers 0-6 or 0-5
     this.populateColArr();
     this.populateRowArr();
+  }
+
+  takeTurn = () => {
+    this.setState({
+      player1Turn: !this.state.player1Turn
+    })
   }
 
   styles = {
@@ -47,14 +54,19 @@ class Board extends React.Component {
   //   console.log(this.rowArr)
   // }
 
-
+  // renders a row for each item in the row array. Then, inside each row, renders a Space for each item in the col array
   render() {
     return (
       <div>
         {this.rowArr.map((r) => (
-          <div key={`row-${r}`}className='row' style={this.styles.boardRow}>
+          <div key={`row-${r}`} className='row' style={this.styles.boardRow}>
           {this.colArr.map((c) => (
-            <Space id={`row-${r}-col-${c}`} key={`row-${r}-col-${c}`}/>
+            <Space
+              color={this.state.color}
+              id={`row-${r}-col-${c}`}
+              key={`row-${r}-col-${c}`}
+              onClick={this.takeTurn}
+            />
           ))}
         </div>
         ))}
