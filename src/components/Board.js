@@ -89,6 +89,9 @@ class Board extends React.Component {
     if (emptySpace) {
       this.takeTurn().then((color) => {
         emptySpace.style.backgroundColor = color;
+        emptySpace.style.transition = 'transform 1s';
+        emptySpace.style.transformStyle = 'preserve-3d'
+        emptySpace.style.transform = 'rotateX(180deg)';
         let won = this.checkWin(emptySpace, color, col, emptyRow)
         if (won) {
           console.log(`${color} won`)
