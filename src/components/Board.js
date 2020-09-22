@@ -14,7 +14,8 @@ class Board extends React.Component {
       player1Turn: true,    // keeps track of current player
       color: 'red',         // the current player's color
       playerHasWon: null,   // set to the color of a player who has won
-      emptySpacesLeft: this.props.rows * this.props.columns     // number of spaces left until a tie occurs
+      emptySpacesLeft: this.props.rows * this.props.columns,     // number of spaces left until a tie occurs
+      visible: true
     }
 
     // first populate the row and column arrays with numbers 0-6 or 0-5
@@ -92,7 +93,8 @@ class Board extends React.Component {
         if (won) {
           console.log(`${color} won`)
           this.setState({ 
-            playerHasWon: color
+            playerHasWon: color,
+            visible: false
           })
         }
       })
@@ -216,7 +218,7 @@ class Board extends React.Component {
 
     // conditionally render the Board
     let Board;
-    if (!this.state.playerHasWon) {
+    // if (!this.state.playerHasWon) {
       Board = (
         this.rowArr.map((r) => (
           <div key={`row-${r}`} className='row' style={this.styles.boardRow}>
@@ -228,12 +230,13 @@ class Board extends React.Component {
                 row={r}
                 key={`row-${r}-col-${c}`}
                 findLowestFreeSpace={this.findLowestFreeSpace}
+                visible={this.state.visible}
               />
             ))}
           </div>
         ))
       )
-    }
+    // }
 
     return (
       <div>

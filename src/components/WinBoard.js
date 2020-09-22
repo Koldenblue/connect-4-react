@@ -1,4 +1,5 @@
 import React from "react"
+import { Animated } from "react-animated-css";
 
 class WinBoard extends React.Component {
   state = {
@@ -8,15 +9,16 @@ class WinBoard extends React.Component {
   styles = {
     winStyle: {
       'backgroundColor' : 'white',
-      'fontSize': '5em'
+      'fontSize': '5em',
+      'position': 'fixed'
     }
   }
 
   render() {
     return (
-      <section style={this.styles.winStyle}>
+      <Animated animationIn={this.state.animationIn} isVisible={true} style={this.styles.winStyle}>
         {this.props.playerWhoWon} has won!!!!
-      </section>
+      </Animated>
     )
   }
 }
