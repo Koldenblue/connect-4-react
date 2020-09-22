@@ -41,7 +41,7 @@ class Board extends React.Component {
     return new Promise((resolve, reject) => {
       console.log("a", this.state)
       if (this.state.player1Turn) {
-        this.asyncState({ 
+        this.asyncState({
           color: 'blue',
           player1Turn: !this.state.player1Turn
         }).then(() => {
@@ -98,59 +98,10 @@ class Board extends React.Component {
     }
   }
 
-  // makeBoard = () => {
-  //   let boardArray = [];
-  //   let spaces = document.getElementsByClassName('board-space');
-
-  //   for (let r = 0; r < this.props.rows; r++) {
-  //     let rowArray = [];
-  //     for (let c = 0; c < this.props.columns; c++) {
-  //       let newSpaceColor = null;
-
-  //     }
-  //   }
-  // }
-  //       this.idList = [];
-  
-  //       // for each board space (class='board-space') add an id. Board spaces in the html will be in the order of 
-  //       // row 0 col 0, row 0 col 1, row 0 col 2, etc.
-  //       let spaceNum = 0;
-  
-  //       for (let r = 0; r < this.rows; r++) {
-  //           let rowArray = [];
-  //           for (let c = 0; c < this.columns; c++) {
-  //               // add a nullpiece for each column in the row
-  //               // console.log("spaces[spacenum] is " + spaces[spaceNum]);
-  //               let nullPiece = new Piece(r, c, null);
-  //               // can access any piece row with myBoard.boardArray[0][0].position.row
-  //               rowArray.push(nullPiece);
-  
-  //               // add an id to each class="board-space" in the html
-  //               spaces[spaceNum].setAttribute("id", "row-" + r + "-col-" + c);
-  //               spaces[spaceNum].setAttribute("data-row", r);
-  //               spaces[spaceNum].setAttribute("data-column", c);
-  
-  //               // also add the id names to an array
-  //               this.idList.push("row-" + r + "-col-" + c);
-  
-  //               // next add an event listener to each empty class=board-space
-  //               spaces[spaceNum].addEventListener("click", (event) => {
-  //                   // console.log(this)
-  //                   // console.log(event.target)
-  //                   let targetSpace = event.target;
-  //                   let targetColumn = Number(targetSpace.getAttribute("data-column"));
-  //                   // console.log(targetColumn)
-  //                   this.move(targetColumn);
-  //               });
-  //               spaceNum++;
-  //           }
-  //           // put the row array, consisting of the 7 column spaces, into the 2D board array
-  //           this.boardArray.push(rowArray);
-  //       }
-  //   }
+  /** Checks the board array at the end of each turn to see if a player has won. */
   checkWin = (newSpace, playerColor, col, emptyRow) => {
-  // check for vertical wins:
-  console.log(playerColor)
+    console.log(playerColor)
+    // check for vertical wins:
     let r = emptyRow - 3;
     r < 0 ? r = 0 : r = r;
     let winCounter = 0;
@@ -166,10 +117,75 @@ class Board extends React.Component {
         winCounter = 0;
       }
     }
+
+    // check columns for horizontal wins:
+    let c = col - 3;
+    c < 0 ? c = 0 : c = c;
+    winCounter = 0;
+    for (c; c < this.props.columns; c++) {
+      if (document.getElementById(`row-${emptyRow}-col-${c}`).style.backgroundColor === playerColor) {
+        winCounter += 1;
+        if (winCounter === 4) {
+          return true;
+        }
+      }
+      else {
+        winCounter = 0;
+      }
+    }
+
+    // check for diagonal wins top left to bottom right
+    // first offset row and column by up to -3 from current position
+    r = emptyRow;
+    c = col;
+    let offsetCounter = 0;
+    while (r > 0 && c > 0 && offsetCounter < 3) {
+      r--;
+      c--;
+      offsetCounter++;
+    }
+    winCounter = 0;
+    for (r, c; r < this.props.rows && c < this.props.columns; r++, c++) {
+      if (document.getElementById(`row-${r}-col-${c}`).style.backgroundColor === playerColor) {
+        winCounter += 1;
+        if (winCounter === 4) {
+          return true;
+        }
+      }
+      else {
+        winCounter = 0;
+      }
+    }
+
+    // last check for diagonal wins, bottom left to top right
+    r = emptyRow;
+    c = col;
+    offsetCounter = 0;
+    // r < ROWS - 1 because max row is excluded
+    while (r < this.props.rows - 1 && c > 0 && offsetCounter < 3) {
+      r++;
+      c--;
+      offsetCounter++;
+    }
+    winCounter = 0;
+    // r >= 0 because row 0 is included
+    for (r, c; r >= 0 && c < this.props.columns; r--, c++) {
+      if (document.getElementById(`row-${r}-col-${c}`).style.backgroundColor === playerColor) {
+        winCounter += 1;
+        if (winCounter === 4) {
+          return true;
+        }
+      }
+      else {
+        winCounter = 0;
+      }
+    }
+    return false;
   }
 
+
   componentDidMount = () => {
-    // this.makeBoard();
+
   }
 
   // renders a row for each item in the row array. Then, inside each row, renders a Space for each item in the col array
@@ -193,14 +209,12 @@ class Board extends React.Component {
       </div>
     )
   }
-
 }
 
 export default Board;
 
 
 
-  // /*** Checks the board array at the end of each turn to see if a player has won.
   // * @param {Board} board Board object needed to access boardArray
   // * @param {Position} newLocation The location where the new piece has been placed */
   // checkWin = (newPiece, playerColor) => {
@@ -208,72 +222,11 @@ export default Board;
   //   // Given that the new piece location is known, only the pieces surrounding the new piece need be checked.
   //   // start at the new piece. subtract 3 from rows, columns, and rows and columns. then have to check row + 7, column +7,
 
-  
 
-  //   // check columns for horizontal wins:
-  //   let c = newPiece.column - 3;
-  //   c < 0 ? c = 0 : c = c;
-  //   winCounter = 0;
-  //   for (c; c < COLUMNS; c++) {
-  //     if (this.boardArray[newPiece.row][c].color === playerColor) {
-  //       winCounter += 1;
-  //       if (winCounter === 4) {
-  //         return true;
-  //       }
-  //     }
-  //     else {
-  //       winCounter = 0;
-  //     }
-  //   }
 
-  //   // check for diagonal wins top left to bottom right
-  //   // first offset row and column by up to -3 from current position
-  //   r = newPiece.row;
-  //   c = newPiece.column;
-  //   let offsetCounter = 0;
-  //   while (r > 0 && c > 0 && offsetCounter < 3) {
-  //     r--;
-  //     c--;
-  //     offsetCounter++;
-  //   }
-  //   winCounter = 0;
-  //   for (r, c; r < ROWS && c < COLUMNS; r++, c++) {
-  //     if (this.boardArray[r][c].color === playerColor) {
-  //       winCounter += 1;
-  //       if (winCounter === 4) {
-  //         return true;
-  //       }
-  //     }
-  //     else {
-  //       winCounter = 0;
-  //     }
-  //   }
 
-  //   // last check for diagonal wins, bottom left to top right
-  //   r = newPiece.row;
-  //   c = newPiece.column;
-  //   offsetCounter = 0;
-  //   // r < ROWS - 1 because max row is excluded
-  //   while (r < ROWS - 1 && c > 0 && offsetCounter < 3) {
-  //     r++;
-  //     c--;
-  //     offsetCounter++;
-  //   }
-  //   winCounter = 0;
-  //   // r >= 0 because row 0 is included
-  //   for (r, c; r >= 0 && c < COLUMNS; r--, c++) {
-  //     if (this.boardArray[r][c].color === playerColor) {
-  //       winCounter += 1;
-  //       if (winCounter === 4) {
-  //         return true;
-  //       }
-  //     }
-  //     else {
-  //       winCounter = 0;
-  //     }
-  //   }
-  //   return false;
-  // }
+
+
 
 
 
