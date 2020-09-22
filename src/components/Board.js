@@ -67,33 +67,25 @@ class Board extends React.Component {
   findLowestFreeSpace = (spaceColor, col, row) => {
     let lowestRow = this.props.rows - 1;
     let emptySpace;
+    let emptyRow;
     console.log(lowestRow)
     // for loop to find the space with the id element where the color is neutral
     for (let r = lowestRow; r >= 0; r--) {
-      console.log("hi")
       let myColor = (document.getElementById(`row-${r}-col-${col}`).style.backgroundColor)
-      console.log(myColor)
-      console.log(myColor === 'rgb(255, 231, 173)')
+      // if the color of the space is neutral, store that space as emptySpace, then break
       if (myColor === 'rgb(255, 231, 173)') {
         emptySpace = (document.getElementById(`row-${r}-col-${col}`));
+        emptyRow = r;
         break;
       }
     }
     this.takeTurn().then((color) => {
-      emptySpace.style.backgroundColor = color
+      emptySpace.style.backgroundColor = color;
+      let won = this.checkWin(emptySpace, color, col, emptyRow)
+      if (won) {
+        console.log(`${color} won`)
+      }
     })
-
-    // if the clicked space is neutral, then return true, and then that space will change color
-    if (spaceColor === '#FFE7AD') {
-      console.log("spaceColor param", spaceColor);
-      return true;
-    }
-    // if color is no longer neutral, we have to find the lowest free space
-    // else {
-    //   if (document.getElementById("")) {
-
-    //   }
-    // }
   }
 
   styles = {
@@ -106,11 +98,78 @@ class Board extends React.Component {
     }
   }
 
-  change = () => {
-    console.log("changed!")
+  // makeBoard = () => {
+  //   let boardArray = [];
+  //   let spaces = document.getElementsByClassName('board-space');
+
+  //   for (let r = 0; r < this.props.rows; r++) {
+  //     let rowArray = [];
+  //     for (let c = 0; c < this.props.columns; c++) {
+  //       let newSpaceColor = null;
+
+  //     }
+  //   }
+  // }
+  //       this.idList = [];
+  
+  //       // for each board space (class='board-space') add an id. Board spaces in the html will be in the order of 
+  //       // row 0 col 0, row 0 col 1, row 0 col 2, etc.
+  //       let spaceNum = 0;
+  
+  //       for (let r = 0; r < this.rows; r++) {
+  //           let rowArray = [];
+  //           for (let c = 0; c < this.columns; c++) {
+  //               // add a nullpiece for each column in the row
+  //               // console.log("spaces[spacenum] is " + spaces[spaceNum]);
+  //               let nullPiece = new Piece(r, c, null);
+  //               // can access any piece row with myBoard.boardArray[0][0].position.row
+  //               rowArray.push(nullPiece);
+  
+  //               // add an id to each class="board-space" in the html
+  //               spaces[spaceNum].setAttribute("id", "row-" + r + "-col-" + c);
+  //               spaces[spaceNum].setAttribute("data-row", r);
+  //               spaces[spaceNum].setAttribute("data-column", c);
+  
+  //               // also add the id names to an array
+  //               this.idList.push("row-" + r + "-col-" + c);
+  
+  //               // next add an event listener to each empty class=board-space
+  //               spaces[spaceNum].addEventListener("click", (event) => {
+  //                   // console.log(this)
+  //                   // console.log(event.target)
+  //                   let targetSpace = event.target;
+  //                   let targetColumn = Number(targetSpace.getAttribute("data-column"));
+  //                   // console.log(targetColumn)
+  //                   this.move(targetColumn);
+  //               });
+  //               spaceNum++;
+  //           }
+  //           // put the row array, consisting of the 7 column spaces, into the 2D board array
+  //           this.boardArray.push(rowArray);
+  //       }
+  //   }
+  checkWin = (newSpace, playerColor, col, emptyRow) => {
+  // check for vertical wins:
+  console.log(playerColor)
+    let r = emptyRow - 3;
+    r < 0 ? r = 0 : r = r;
+    let winCounter = 0;
+    for (r; r < this.props.rows; r++) {
+      if (document.getElementById(`row-${r}-col-${col}`).style.backgroundColor === playerColor) {
+        winCounter += 1;
+        console.log("win++")
+        if (winCounter === 4) {
+          return true;
+        }
+      }
+      else {
+        winCounter = 0;
+      }
+    }
   }
+
   componentDidMount = () => {
-    // console.log(this.state)
+    // this.makeBoard();
   }
 
   // renders a row for each item in the row array. Then, inside each row, renders a Space for each item in the col array
@@ -126,9 +185,7 @@ class Board extends React.Component {
                 col={c}
                 row={r}
                 key={`row-${r}-col-${c}`}
-                takeTurn={this.takeTurn}
                 findLowestFreeSpace={this.findLowestFreeSpace}
-                change={this.change}
               />
             ))}
           </div>
@@ -151,22 +208,7 @@ export default Board;
   //   // Given that the new piece location is known, only the pieces surrounding the new piece need be checked.
   //   // start at the new piece. subtract 3 from rows, columns, and rows and columns. then have to check row + 7, column +7,
 
-  //   // check for vertical wins:
-  //   let r = newPiece.row - 3;
-  //   r < 0 ? r = 0 : r = r;
-  //   let winCounter = 0;
-  //   for (r; r < ROWS; r++) {
-  //     if (this.boardArray[r][newPiece.column].color === playerColor) {
-  //       winCounter += 1;
-  //       console.log("win++")
-  //       if (winCounter === 4) {
-  //         return true;
-  //       }
-  //     }
-  //     else {
-  //       winCounter = 0;
-  //     }
-  //   }
+  
 
   //   // check columns for horizontal wins:
   //   let c = newPiece.column - 3;
