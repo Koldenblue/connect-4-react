@@ -6,14 +6,7 @@ class Space extends React.Component {
     super(props)
 
     this.state = {
-      boardSpace: {
-        'border': '2px black solid',
-        'backgroundColor': '#FFE7AD',
-        'borderRadius': '50px',
-        'marginTop':0,
-        'padding':0,
-        'height': '95px',
-      }
+      
     }
   }
 
@@ -25,11 +18,18 @@ class Space extends React.Component {
       'padding': 0,
       'borderRadius': '8px'
       },
-    
+    boardSpace: {
+      'border': '2px black solid',
+      'backgroundColor': '#FFE7AD',
+      'borderRadius': '50px',
+      'marginTop':0,
+      'padding':0,
+      'height': '95px',
+    }
   }
 
   changeColor = () => {
-    (this.props.findLowestFreeSpace(this.state.boardSpace["backgroundColor"], this.props.col, this.props.row))
+    (this.props.findLowestFreeSpace(this.styles.boardSpace["backgroundColor"], this.props.col, this.props.row))
   }
 
   render() {
@@ -37,7 +37,7 @@ class Space extends React.Component {
       <div className='col-md-1' style={this.styles.boardColumn}>
         <div className='col-md-12 board-space' 
           id={this.props.id}
-          style={this.state.boardSpace}
+          style={this.styles.boardSpace}
           onClick={this.changeColor}
           col={this.props.col}
           row={this.props.row}

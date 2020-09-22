@@ -1,5 +1,6 @@
 import React from "react";
 import Space from "./Space"
+import WinBoard from "./WinBoard"
 const util = require("util")
 
 class Board extends React.Component {
@@ -9,6 +10,7 @@ class Board extends React.Component {
     this.state = {
       player1Turn: true,
       color: 'red',
+      playerHasWon: null
     }
 
     // first populate the row and column arrays with numbers 0-6 or 0-5
@@ -85,6 +87,9 @@ class Board extends React.Component {
         let won = this.checkWin(emptySpace, color, col, emptyRow)
         if (won) {
           console.log(`${color} won`)
+          this.setState({ 
+            playerHasWon: color
+          })
         }
       })
     }
@@ -188,6 +193,9 @@ class Board extends React.Component {
     return false;
   }
 
+  dispWin = () => {
+
+  }
 
   componentDidMount = () => {
 
@@ -195,8 +203,15 @@ class Board extends React.Component {
 
   // renders a row for each item in the row array. Then, inside each row, renders a Space for each item in the col array
   render() {
+    // conditionally render the WinBoard.
+    let winDisp;
+    if (this.state.playerHasWon) {
+      winDisp = <WinBoard playerWhoWon={this.state.playerHasWon} />
+    }
+
     return (
       <div>
+        {winDisp}
         {this.rowArr.map((r) => (
           <div key={`row-${r}`} className='row' style={this.styles.boardRow}>
             {this.colArr.map((c) => (
