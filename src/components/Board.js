@@ -10,7 +10,7 @@ class Board extends React.Component {
     this.state = {
       player1Turn: true,
       color: 'red',
-      playerHasWon: null
+      playerHasWon: null,
     }
 
     // first populate the row and column arrays with numbers 0-6 or 0-5
@@ -209,10 +209,10 @@ class Board extends React.Component {
       winDisp = <WinBoard playerWhoWon={this.state.playerHasWon} />
     }
 
-    return (
-      <div>
-        {winDisp}
-        {this.rowArr.map((r) => (
+    let Board;
+    if (!this.state.playerHasWon) {
+      Board = (
+        this.rowArr.map((r) => (
           <div key={`row-${r}`} className='row' style={this.styles.boardRow}>
             {this.colArr.map((c) => (
               <Space
@@ -225,7 +225,14 @@ class Board extends React.Component {
               />
             ))}
           </div>
-        ))}
+        ))
+      )
+    }
+
+    return (
+      <div>
+        {winDisp}
+        {Board}
       </div>
     )
   }

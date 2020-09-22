@@ -3,12 +3,10 @@ import React from "react"
 class WinBoard extends React.Component {
   state = {
     playerWhoWon: null,
-    displayState: 'none'
   }
 
   styles = {
     winStyle: {
-      'display': this.state.displayState,
       'backgroundColor' : 'white',
       'fontSize': '5em'
     }
@@ -16,7 +14,7 @@ class WinBoard extends React.Component {
 
   render() {
     return (
-      <section>
+      <section style={this.styles.winStyle}>
         {this.props.playerWhoWon} has won!!!!
       </section>
     )
