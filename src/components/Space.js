@@ -18,7 +18,7 @@ class Space extends React.Component {
       'border': '2px black solid',
       'marginTop': 0,
       'padding': 0,
-      'borderRadius': '8px'
+      'borderRadius': '8px',
     },
     boardSpace: {
       'border': '2px black solid',
@@ -38,8 +38,8 @@ class Space extends React.Component {
 
   render() {
     return (
-      <Animated animationIn={this.state.animationIn} isVisible={this.props.visible} className='col-md-1' style={this.styles.boardColumn}>
-        <div className='col-md-12 board-space'
+      <Animated animationIn={this.state.animationIn} isVisible={this.props.visible} className='col-sm-1' style={this.styles.boardColumn}>
+        <div className='col-sm-12 board-space'
           id={this.props.id}
           style={this.styles.boardSpace}
           onClick={this.changeColor}

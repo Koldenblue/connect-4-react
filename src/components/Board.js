@@ -75,7 +75,7 @@ class Board extends React.Component {
     let lowestRow = this.props.rows - 1;
     let emptySpace;
     let emptyRow;
-    console.log(lowestRow)
+    console.log(lowestRow);
     // for loop to find the space with the id element where the color is neutral
     for (let r = lowestRow; r >= 0; r--) {
       let myColor = (document.getElementById(`row-${r}-col-${col}`).style.backgroundColor)
@@ -90,8 +90,9 @@ class Board extends React.Component {
       this.takeTurn().then((color) => {
         emptySpace.style.backgroundColor = color;
         emptySpace.style.transition = 'transform 1s';
-        emptySpace.style.transformStyle = 'preserve-3d'
-        emptySpace.style.transform = 'rotateX(180deg)';
+        emptySpace.style.transformStyle = 'preserve-3d';
+        emptySpace.style.top = '-100px';
+        emptySpace.style.transform = 'translateY(100px)';
         let won = this.checkWin(emptySpace, color, col, emptyRow)
         if (won) {
           console.log(`${color} won`)
