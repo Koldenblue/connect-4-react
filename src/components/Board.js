@@ -39,12 +39,13 @@ class Board extends React.Component {
 
   takeTurn = () => {
     return new Promise((resolve, reject) => {
-      console.log(this.state)
+      console.log("a", this.state)
       if (this.state.player1Turn) {
         this.asyncState({ 
           color: 'blue',
           player1Turn: !this.state.player1Turn
         }).then(() => {
+          console.log("b", this.state)
           resolve(this.state.color);
         })
       }
@@ -53,12 +54,21 @@ class Board extends React.Component {
           color: 'red',
           player1Turn: !this.state.player1Turn
         }).then(() => {
+          console.log("c", this.state)
           resolve(this.state.color);
         })
       }
-      console.log(this.state)
+      // here, this is logged before the state is actually changed!
+      console.log("d", this.state)
       // resolve(this.state.color);
     })
+  }
+
+  findLowestFreeSpace = (spaceColor) => {
+    if (spaceColor === '#FFE7AD') {
+      console.log(spaceColor);
+      return true;
+    }
   }
 
   styles = {
@@ -72,7 +82,7 @@ class Board extends React.Component {
   }
 
   componentDidMount = () => {
-    console.log(this.state)
+    // console.log(this.state)
   }
 
   // /*** Checks the board array at the end of each turn to see if a player has won.
@@ -178,6 +188,7 @@ class Board extends React.Component {
                 id={`row-${r}-col-${c}`}
                 key={`row-${r}-col-${c}`}
                 takeTurn={this.takeTurn}
+                findLowestFreeSpace={this.findLowestFreeSpace}
               />
             ))}
           </div>
