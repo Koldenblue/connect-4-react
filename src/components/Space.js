@@ -32,18 +32,18 @@ class Space extends React.Component {
     // if this space is a neutral color
     if (this.props.findLowestFreeSpace(this.state.boardSpace["backgroundColor"], this.props.col, this.props.row)) {
       // then set the state to blue or red, depending on turn
-      this.props.takeTurn().then(color => {
-        this.setState({
-          boardSpace: {
-            'border': '2px black solid',
-            'backgroundColor': color,
-            'borderRadius': '50px',
-            'marginTop':0,
-            'padding':0,
-            'height': '95px'
-          }
-        })
-      })
+      // this.props.takeTurn().then(color => {
+      //   this.setState({
+      //     boardSpace: {
+      //       'border': '2px black solid',
+      //       'backgroundColor': color,
+      //       'borderRadius': '50px',
+      //       'marginTop':0,
+      //       'padding':0,
+      //       'height': '95px'
+      //     }
+      //   })
+      // })
     }
     // else we have to change the state of a different space
   }

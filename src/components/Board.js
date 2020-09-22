@@ -76,14 +76,12 @@ class Board extends React.Component {
       console.log(myColor === 'rgb(255, 231, 173)')
       if (myColor === 'rgb(255, 231, 173)') {
         emptySpace = (document.getElementById(`row-${r}-col-${col}`));
-        console.log(emptySpace)
-        console.log(emptySpace.attributes)
-        console.log(emptySpace.props)
-        emptySpace.style.backgroundColor = 'purple'
-
         break;
       }
     }
+    this.takeTurn().then((color) => {
+      emptySpace.style.backgroundColor = color
+    })
 
     // if the clicked space is neutral, then return true, and then that space will change color
     if (spaceColor === '#FFE7AD') {
