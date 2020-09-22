@@ -1,3 +1,6 @@
 body {
-  background-color:rgb(255, 200, 132);
+  /* background-color:rgb(255, 200, 132); */
+  height: 100vh;
+  background: rgb(83,164,198);
+  background: linear-gradient(25deg, rgba(83,164,198,1) 31%, rgba(253,187,45,1) 90%); 
 }
