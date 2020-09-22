@@ -79,13 +79,15 @@ class Board extends React.Component {
         break;
       }
     }
-    this.takeTurn().then((color) => {
-      emptySpace.style.backgroundColor = color;
-      let won = this.checkWin(emptySpace, color, col, emptyRow)
-      if (won) {
-        console.log(`${color} won`)
-      }
-    })
+    if (emptySpace) {
+      this.takeTurn().then((color) => {
+        emptySpace.style.backgroundColor = color;
+        let won = this.checkWin(emptySpace, color, col, emptyRow)
+        if (won) {
+          console.log(`${color} won`)
+        }
+      })
+    }
   }
 
   styles = {
@@ -99,6 +101,9 @@ class Board extends React.Component {
   }
 
   /** Checks the board array at the end of each turn to see if a player has won. */
+  // a connect 4 is possible in 4 directions - left-right, up-down, and diagonally each way
+  // Given that the new piece location is known, only the pieces surrounding the new piece need be checked.
+  // start at the new piece. subtract 3 from rows, columns, and rows and columns. then have to check row + 7, column +7,
   checkWin = (newSpace, playerColor, col, emptyRow) => {
     console.log(playerColor)
     // check for vertical wins:
@@ -212,86 +217,3 @@ class Board extends React.Component {
 }
 
 export default Board;
-
-
-
-  // * @param {Board} board Board object needed to access boardArray
-  // * @param {Position} newLocation The location where the new piece has been placed */
-  // checkWin = (newPiece, playerColor) => {
-  //   // a connect 4 is possible in 4 directions - left-right, up-down, and diagonally each way
-  //   // Given that the new piece location is known, only the pieces surrounding the new piece need be checked.
-  //   // start at the new piece. subtract 3 from rows, columns, and rows and columns. then have to check row + 7, column +7,
-
-
-
-
-
-
-
-
-
-// class oldBoard {
-//   constructor(rows, columns) {
-//       this.rows = rows;
-//       this.columns = columns;
-//       // board array is a 2D array, where there are ROWS indices, and each row array has COLUMNS number of columns.
-//       // So boardArray[rows][columns]
-//       this.boardArray = [];
-//       this.idList = [];
-
-//       // for each board space (class='board-space') add an id. Board spaces in the html will be in the order of 
-//       // row 0 col 0, row 0 col 1, row 0 col 2, etc.
-//       let spaces = document.getElementsByClassName('board-space');
-//       let spaceNum = 0;
-
-//       for (let r = 0; r < this.rows; r++) {
-//           let rowArray = [];
-//           for (let c = 0; c < this.columns; c++) {
-//               // add a nullpiece for each column in the row
-//               // console.log("spaces[spacenum] is " + spaces[spaceNum]);
-//               let nullPiece = new Piece(r, c, null);
-//               // can access any piece row with myBoard.boardArray[0][0].position.row
-//               rowArray.push(nullPiece);
-
-//               // add an id to each class="board-space" in the html
-//               spaces[spaceNum].setAttribute("id", "row-" + r + "-col-" + c);
-//               spaces[spaceNum].setAttribute("data-row", r);
-//               spaces[spaceNum].setAttribute("data-column", c);
-
-//               // also add the id names to an array
-//               this.idList.push("row-" + r + "-col-" + c);
-
-//               // next add an event listener to each empty class=board-space
-//               spaces[spaceNum].addEventListener("click", (event) => {
-//                   // console.log(this)
-//                   // console.log(event.target)
-//                   let targetSpace = event.target;
-//                   let targetColumn = Number(targetSpace.getAttribute("data-column"));
-//                   // console.log(targetColumn)
-//                   this.move(targetColumn);
-//               });
-//               spaceNum++;
-//           }
-//           // put the row array, consisting of the 7 column spaces, into the 2D board array
-//           this.boardArray.push(rowArray);
-//       }
-//   }
-
-//   /** moves a piece. If move is invalid, return false. 
-//    * targetColumn is assigned by the event listener created in the Board constructor, and depends on the space clicked.*/
-//   move = (targetColumn) => {
-//       // arrow function binds board object to this function
-//       console.log("you clicked " + this);
-
-//       // run turn function upon board click
-//       if (player1Turn) {
-//           player1.turn(targetColumn, this, player1);
-//       }
-//       else {
-//           player2.turn(targetColumn, this, player2);
-//       }
-//       // pass appropriate col parameter to turn function, along with current player and the board state
-//   }
-
-
-// }
