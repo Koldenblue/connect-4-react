@@ -1,6 +1,9 @@
 import React from "react";
 import Space from "./Space"
 import WinBoard from "./WinBoard"
+import RestartButton from "./RestartButton"
+
+
 const util = require("util")
 
 class Board extends React.Component {
@@ -8,9 +11,10 @@ class Board extends React.Component {
     super(props);
 
     this.state = {
-      player1Turn: true,
-      color: 'red',
-      playerHasWon: null,
+      player1Turn: true,    // keeps track of current player
+      color: 'red',         // the current player's color
+      playerHasWon: null,   // set to the color of a player who has won
+      emptySpacesLeft: this.props.rows * this.props.columns     // number of spaces left until a tie occurs
     }
 
     // first populate the row and column arrays with numbers 0-6 or 0-5
@@ -193,8 +197,9 @@ class Board extends React.Component {
     return false;
   }
 
-  dispWin = () => {
-
+  restart = () => {
+    console.log("restarting")
+    window.location.reload()
   }
 
   componentDidMount = () => {
@@ -203,12 +208,13 @@ class Board extends React.Component {
 
   // renders a row for each item in the row array. Then, inside each row, renders a Space for each item in the col array
   render() {
-    // conditionally render the WinBoard.
+    // conditionally render the WinBoard
     let winDisp;
     if (this.state.playerHasWon) {
       winDisp = <WinBoard playerWhoWon={this.state.playerHasWon} />
     }
 
+    // conditionally render the Board
     let Board;
     if (!this.state.playerHasWon) {
       Board = (
@@ -233,6 +239,9 @@ class Board extends React.Component {
       <div>
         {winDisp}
         {Board}
+        <RestartButton 
+          restart={this.restart}
+        />
       </div>
     )
   }
