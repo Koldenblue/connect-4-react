@@ -64,11 +64,38 @@ class Board extends React.Component {
     })
   }
 
-  findLowestFreeSpace = (spaceColor) => {
+  findLowestFreeSpace = (spaceColor, col, row) => {
+    let lowestRow = this.props.rows - 1;
+    let emptySpace;
+    console.log(lowestRow)
+    // for loop to find the space with the id element where the color is neutral
+    for (let r = lowestRow; r >= 0; r--) {
+      console.log("hi")
+      let myColor = (document.getElementById(`row-${r}-col-${col}`).style.backgroundColor)
+      console.log(myColor)
+      console.log(myColor === 'rgb(255, 231, 173)')
+      if (myColor === 'rgb(255, 231, 173)') {
+        emptySpace = (document.getElementById(`row-${r}-col-${col}`));
+        console.log(emptySpace)
+        console.log(emptySpace.attributes)
+        console.log(emptySpace.props)
+        emptySpace.style.backgroundColor = 'purple'
+
+        break;
+      }
+    }
+
+    // if the clicked space is neutral, then return true, and then that space will change color
     if (spaceColor === '#FFE7AD') {
-      console.log(spaceColor);
+      console.log("spaceColor param", spaceColor);
       return true;
     }
+    // if color is no longer neutral, we have to find the lowest free space
+    // else {
+    //   if (document.getElementById("")) {
+
+    //   }
+    // }
   }
 
   styles = {
@@ -81,9 +108,42 @@ class Board extends React.Component {
     }
   }
 
+  change = () => {
+    console.log("changed!")
+  }
   componentDidMount = () => {
     // console.log(this.state)
   }
+
+  // renders a row for each item in the row array. Then, inside each row, renders a Space for each item in the col array
+  render() {
+    return (
+      <div>
+        {this.rowArr.map((r) => (
+          <div key={`row-${r}`} className='row' style={this.styles.boardRow}>
+            {this.colArr.map((c) => (
+              <Space
+                color={this.state.color}
+                id={`row-${r}-col-${c}`}
+                col={c}
+                row={r}
+                key={`row-${r}-col-${c}`}
+                takeTurn={this.takeTurn}
+                findLowestFreeSpace={this.findLowestFreeSpace}
+                change={this.change}
+              />
+            ))}
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+}
+
+export default Board;
+
+
 
   // /*** Checks the board array at the end of each turn to see if a player has won.
   // * @param {Board} board Board object needed to access boardArray
@@ -174,39 +234,6 @@ class Board extends React.Component {
   //   }
   //   return false;
   // }
-
-
-  // renders a row for each item in the row array. Then, inside each row, renders a Space for each item in the col array
-  render() {
-    return (
-      <div>
-        {this.rowArr.map((r) => (
-          <div key={`row-${r}`} className='row' style={this.styles.boardRow}>
-            {this.colArr.map((c) => (
-              <Space
-                color={this.state.color}
-                id={`row-${r}-col-${c}`}
-                key={`row-${r}-col-${c}`}
-                takeTurn={this.takeTurn}
-                findLowestFreeSpace={this.findLowestFreeSpace}
-              />
-            ))}
-          </div>
-        ))}
-      </div>
-    )
-  }
-
-
-  /** This function is called after the function is rendered */
-  // componentDidMount() {
-  //   this.populateRowArr();
-  //   this.populateColArr();
-  //   console.log(this.rowArr)
-  // }
-}
-
-export default Board;
 
 
 
