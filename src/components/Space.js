@@ -37,6 +37,7 @@ class Space extends React.Component {
   }
 
   render() {
+    console.log(this.props.id)
     return (
       <Animated animationIn={this.state.animationIn} isVisible={this.props.visible} className='col-sm-1' style={this.styles.boardColumn}>
         <div className='col-sm-12 board-space'

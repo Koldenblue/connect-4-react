@@ -1,4 +1,5 @@
-import React from "react";
+// importing createRef function so we can get refs of components
+import React, {createRef} from "react";
 import Space from "./Space"
 import WinBoard from "./WinBoard"
 import RestartButton from "./RestartButton"
@@ -9,7 +10,7 @@ const util = require("util")
 class Board extends React.Component {
   constructor(props) {
     super(props);
-
+    this.boardRef = createRef()
     this.state = {
       player1Turn: true,    // keeps track of current player
       color: 'red',         // the current player's color
@@ -18,10 +19,15 @@ class Board extends React.Component {
       visible: true
     }
 
+    // number of rows that a piece will fall
+    // todo: also make a second piece for the background neutral
+    // todo: have a piece bounce when it lands
+    let rowsToFall = (this.props.rows * 100) + 'px'
     // first populate the row and column arrays with numbers 0-6 or 0-5
     this.populateColArr();
     this.populateRowArr();
   }
+
 
   // creating new arrays the size of rows and columns, so that they can be mapped to Spaces below
   rowArr = new Array(this.props.rows);
@@ -91,8 +97,8 @@ class Board extends React.Component {
         emptySpace.style.backgroundColor = color;
         emptySpace.style.transition = 'transform 1s';
         emptySpace.style.transformStyle = 'preserve-3d';
-        emptySpace.style.top = '-100px';
-        emptySpace.style.transform = 'translateY(100px)';
+        emptySpace.style.top = '-700px';
+        emptySpace.style.transform = 'translateY(700px)';
         let won = this.checkWin(emptySpace, color, col, emptyRow)
         if (won) {
           console.log(`${color} won`)
@@ -220,6 +226,12 @@ class Board extends React.Component {
       winDisp = <WinBoard playerWhoWon={this.state.playerHasWon} />
     }
 
+    // creating a ref here => so hopefully we can find the element by ref, instead of doc.getelem
+    // may have to put spaces into an array, instead of the map being used below
+    // instead of doc.getelem, may also have to lift state up
+    const reference = this.boardRef.current
+    console.log("ref is", reference)
+
     // conditionally render the Board
     let Board;
     // if (!this.state.playerHasWon) {
@@ -228,6 +240,8 @@ class Board extends React.Component {
           <div key={`row-${r}`} className='row' style={this.styles.boardRow}>
             {this.colArr.map((c) => (
               <Space
+              // ref here to try and find the piece, instead of using document.getelement
+                ref={this.boardRef}
                 color={this.state.color}
                 id={`row-${r}-col-${c}`}
                 col={c}
