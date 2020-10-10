@@ -15,7 +15,7 @@ class WinBoard extends React.Component {
 
   styles = {
     winStyle: {
-      'backgroundColor' : 'white',
+      'backgroundColor': 'white',
       'fontSize': '5em',
       'position': 'fixed',
       borderRadius: '20px'
@@ -24,9 +24,15 @@ class WinBoard extends React.Component {
 
   render() {
     return (
-      <Animated animationIn={this.state.animationIn} isVisible={true} style={this.styles.winStyle}>
-        {this.props.playerWhoWon} has won!!!!
-      </Animated>
+      <>
+        <div className='col-md-3'></div>
+        <div className='col-md-6'>
+          <Animated animationIn={this.state.animationIn} isVisible={true} style={this.styles.winStyle}>
+            {this.props.playerWhoWon} has won!!!!
+          </Animated>
+        </div>
+        <div className='col-md-3'></div>
+      </>
     )
   }
 }

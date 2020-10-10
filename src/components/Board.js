@@ -1,5 +1,5 @@
 // importing createRef function so we can get refs of components
-import React, {createRef} from "react";
+import React, { createRef } from "react";
 import Space from "./Space"
 import WinBoard from "./WinBoard"
 import RestartButton from "./RestartButton"
@@ -102,7 +102,7 @@ class Board extends React.Component {
         let won = this.checkWin(emptySpace, color, col, emptyRow)
         if (won) {
           console.log(`${color} won`)
-          this.setState({ 
+          this.setState({
             playerHasWon: color,
             visible: false
           })
@@ -235,35 +235,38 @@ class Board extends React.Component {
     // conditionally render the Board
     let Board;
     // if (!this.state.playerHasWon) {
-      Board = (
-        this.rowArr.map((r) => (
-          <div key={`row-${r}`} className='row' style={this.styles.boardRow}>
-            {this.colArr.map((c) => (
-              <Space
+    Board = (
+      this.rowArr.map((r) => (
+        <div key={`row-${r}`} className='row' style={this.styles.boardRow}>
+        <div className='col-sm-3'></div>
+          {this.colArr.map((c) => (
+            <Space
               // ref here to try and find the piece, instead of using document.getelement
-                ref={this.boardRef}
-                color={this.state.color}
-                id={`row-${r}-col-${c}`}
-                col={c}
-                row={r}
-                key={`row-${r}-col-${c}`}
-                findLowestFreeSpace={this.findLowestFreeSpace}
-                visible={this.state.visible}
-              />
-            ))}
-          </div>
-        ))
-      )
+              ref={this.boardRef}
+              color={this.state.color}
+              id={`row-${r}-col-${c}`}
+              col={c}
+              row={r}
+              key={`row-${r}-col-${c}`}
+              findLowestFreeSpace={this.findLowestFreeSpace}
+              visible={this.state.visible}
+            />
+          ))}
+        </div>
+      ))
+    )
     // }
 
     return (
-      <div>
-        {winDisp}
-        {Board}
-        <RestartButton 
+      <main className='container'>
+        <div className='row'>
+          {winDisp}
+        </div>
+          {Board}
+        <RestartButton
           restart={this.restart}
         />
-      </div>
+      </main>
     )
   }
 }
