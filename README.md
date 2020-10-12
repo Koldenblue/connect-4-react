@@ -8,7 +8,7 @@
 2. <a href="#license">License</a>
 3. <a href="#questions">Issues and Questions</a>
 <hr><h3 id='description'>Description</h3>
-Connect 4, programmed in React! This project was originally written for a browser with vanilla JavaScript, as well as the jQuery library. The original project can be found at https://koldenblue.github.io/games-websites/, and the <a href='https://github.com/Koldenblue/games-websites'>original GitHub repository</a>.
+Connect 4, programmed in React! This project was originally written for a browser with vanilla JavaScript, as well as the jQuery library. Play Connect 4 at <a href='https://connect-4-react.herokuapp.com/'>the deployed website!</a> The original deployed website can be found <a href='https://koldenblue.github.io/games-websites/'>here</a>, in addition to the source code in the <a href='https://github.com/Koldenblue/games-websites'>original GitHub repository</a>.
 <br />
 
 ![image](https://user-images.githubusercontent.com/64618290/95711848-7664d480-0c18-11eb-9c89-dd3e3bb63e54.png)
