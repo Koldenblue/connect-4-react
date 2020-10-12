@@ -10,6 +10,8 @@
 <hr><h3 id='description'>Description</h3>
 Connect 4, programmed in React! This project was originally written for a browser with vanilla JavaScript, as well as the jQuery library. The original project can be found at https://koldenblue.github.io/games-websites/, and the <a href='https://github.com/Koldenblue/games-websites'>original GitHub repository</a>.
 
+![image](https://user-images.githubusercontent.com/64618290/95711848-7664d480-0c18-11eb-9c89-dd3e3bb63e54.png)
+
 <h3 id='license'>License</h3>
 This project is licensed under the MIT License.
 
